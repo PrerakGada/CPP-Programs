@@ -2,6 +2,9 @@
 #include<stdlib.h>
 using namespace std;
 
+string Bill[100] = {};
+double aBill = 0;
+
 //-----------------------------------TicTacToe------------------------------------------
 void tttdisplayboard(char board[9])
 {
@@ -175,8 +178,7 @@ void hmdisplay(string word, string hangman, string wrong, int c)
 
 void HangMan()
 {
-    string words[10] = {"encapsulation", "awesome", "floroscent", "enormity", "technique",
-                        "polynomial", "difficult", "luggage", "eliminate", "rythm"};
+    string words[10] = {"encapsulation", "awesome", "floroscent", "enormity", "technique", "polynomial", "difficult", "luggage", "eliminate", "rythm"};
     //string word = words[rand()%10];
     string word = "hey";
     int len = word.length();
@@ -191,7 +193,6 @@ void HangMan()
     while(chances>0 && word != hangman)
     {
         hmdisplay(word, hangman, wrong, chances);
-        
         hmplay:
         char in;
         bool used = false;
@@ -237,11 +238,51 @@ void HangMan()
 //---------------------------------------Restaurant---------------------------------------
 
 
+void rmeal()
+{
+    cout<<"1.Rice\n2.Roti\n3.Daal"<<endl;
+}
+
+void rfastfood()
+{
+    cout<<"1.Pizza\n2.Sandwich\n3.Burger"<<endl;
+}
+
+void rdd()
+{
+    cout<<"1.Nutella\n2.Gola\n3.Ice-Cream\n4.Breezer\n5.RedBull"<<endl;
+}
+
+void Restaurant()
+{
+    cout<<"Welcome to The Great Indian Resort's Restaurant!!"<<endl;
+
+    int c;
+
+    cout<<"1.Meal\n2.Fast Food\n3.Deserts and Drinks"<<endl;
+
+    cout<<"Enter your choice: ";
+    cin>>c;
+    switch(c)
+    {
+        case 1:
+        rmeal();
+        break;
+        case 2:
+        rfastfood();
+        break;
+        case 3:
+        rdd();
+        break;
+
+    }
+}
+
 // ---------------------------------------Main Code--------------------------------------
 int main()
 {
 
-    HangMan();
+    Restaurant();
 
     return 0;
 } 
