@@ -192,6 +192,7 @@ void HangMan()
     
     while(chances>0 && word != hangman)
     {
+        system("clear");
         hmdisplay(word, hangman, wrong, chances);
         hmplay:
         char in;
@@ -282,8 +283,7 @@ void Restaurant()
 // ---------------------------------------Main Code--------------------------------------
 int main()
 {
-
-    Restaurant();
+    HangMan();
 
     return 0;
 } 
