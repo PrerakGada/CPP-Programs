@@ -5,9 +5,19 @@ using namespace std;
 string Bill[100] = {};
 double aBill = 0;
 
+void TicTacToe(void);
+void HangMan(void);
+void Games(void);
+void MainMenu(void);
+void Restaurant(void);
+void CheckOut(void);
+
+
 //-----------------------------------TicTacToe------------------------------------------
 void tttdisplayboard(char board[9])
 {
+    cout<<"\n-------TicTacToe-------"<<endl;
+    cout<<"\n1|2|3\n-+-+-\n4|5|6\n-+-+-\n7|8|9"<<endl;
     cout<<"\n";
     cout<<board[0]<<"|"<<board[1]<<"|"<<board[2]<<endl;
     cout<<"-+-+-"<<endl;
@@ -140,21 +150,28 @@ char tttplayer(char t, int mc)
 
 void TicTacToe() //TicTacToe driver code
 {
-    cout<<"\n1|2|3\n-+-+-\n4|5|6\n-+-+-\n7|8|9"<<endl;
     char board[9] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
     bool Game = true;
     int MoveCount = 0;
     char turn = 'X';
-    tttdisplayboard(board);
 
     while(Game == true)
     {
+        system("clear");
+        tttdisplayboard(board);
         turn = tttplayer(turn, MoveCount);
         tttmove(turn, board);
         MoveCount++;
+
         tttdisplayboard(board);
         Game = tttWinLose(Game, board);
     }
+    int a;
+    cout<<"\n\n\nDo you want to play again?"<<endl;
+    cout<<"Enter 1 for yes: ";
+    cin>>a;
+    if(a==1)
+        TicTacToe();
 }
 
 //----------------------------------------HangMan----------------------------------------
@@ -162,7 +179,7 @@ void TicTacToe() //TicTacToe driver code
 void hmdisplay(string word, string hangman, string wrong, int c)
 {
 
-    cout<<"\n\n-----HangMan-----\n"<<endl;
+    cout<<"\n-------HangMan-------\n"<<endl;
 
     cout<<"Chances left: "<<c<<endl;
     cout<<"Attempted Alphabets: ";
@@ -185,7 +202,7 @@ void HangMan()
     string wrong = "";
     string hangman = "";
     string flag = "t";
-    int chances = 10;
+    int chances = 2;
 
     for(int i=0;i<len;i++)
         hangman += "-";
@@ -231,9 +248,20 @@ void HangMan()
         }
     }
     if(hangman == word)
-        cout<<"Congratulaitons, You won!!"<<endl;
+    {
+        system("clear");
+        hmdisplay(word, hangman, wrong, chances);
+        cout<<"\n\nCongratulaitons, You won!!"<<endl;
+    }
     else
-        cout<<"Your chances are over, Better luck next time.\nThe word was: "<<word<<endl;
+        cout<<"\n\nYour chances are over, Better luck next time.\n\nThe word was: "<<word<<endl;
+    
+    int a;
+    cout<<"\n\n\nDo you want to play again?"<<endl;
+    cout<<"Enter 1 for yes: ";
+    cin>>a;
+    if(a==1)
+        HangMan();
 }
 
 //---------------------------------------Restaurant---------------------------------------
@@ -256,6 +284,7 @@ void rdd()
 
 void Restaurant()
 {
+    system("clear");
     cout<<"Welcome to The Great Indian Resort's Restaurant!!"<<endl;
 
     int c;
@@ -267,29 +296,118 @@ void Restaurant()
     switch(c)
     {
         case 1:
-        rmeal();
-        break;
+            rmeal();
+            break;
+
         case 2:
-        rfastfood();
-        break;
+            rfastfood();
+            break;
+
         case 3:
-        rdd();
-        break;
+            rdd();
+            break;
+
+        default:
+            Restaurant();
+            break;
 
     }
 }
 
+void Games()
+{
+    system("clear");
+    int choice;
+    cout<<"-------------------------------"<<endl;
+    cout<<"|            Games            |"<<endl;
+    cout<<"-------------------------------"<<endl;
+    cout<<"| 1.TicTacToe                 |"<<endl;
+    cout<<"| 2.HangMan                   |"<<endl;
+    cout<<"|                             |"<<endl;
+    cout<<"| 0.Main Menu                 |"<<endl;
+    cout<<"-------------------------------"<<endl;
+    cout<<"Enter your choice: ";
+    cin>>choice;
 
+    switch (choice)
+    {
+    case 1:
+        TicTacToe();
+        break;
+
+    case 2:
+        HangMan();
+        break;
+
+    case 0:
+        MainMenu();
+        break;
+    
+    default:
+        Games();
+        break;
+    }
+
+}
+
+void CheckOut()
+{
+    system("clear");
+
+}
+
+void MainMenu()
+{
+    system("clear");
+    int choice;
+    cout<<"-------------------------------"<<endl;
+    cout<<"|          Main Menu          |"<<endl;
+    cout<<"-------------------------------"<<endl;
+    cout<<"| 1.Play Games                |"<<endl;
+    cout<<"| 2.Restaurant                |"<<endl;
+    cout<<"|                             |"<<endl;
+    cout<<"| 0.Check Out                 |"<<endl;
+    cout<<"-------------------------------"<<endl;
+    cout<<"Enter your choice: ";
+    cin>>choice;
+
+    switch (choice)
+    {
+    case 1:
+        Games();
+        break;
+
+    case 2:
+        Restaurant();
+        break;
+
+    case 0:
+        int c;
+        system("clear");
+        cout<<"-------------------------------"<<endl;
+        cout<<"|            Alert!           |"<<endl;
+        cout<<"-------------------------------"<<endl;
+        cout<<"Are you sure you want to Check Out?"<<endl;
+        cout<<"Enter 1 for yes: ";
+        cin>>c;
+        if(c==1)
+            CheckOut();
+        else 
+            MainMenu();
+        break;
+    
+    default:
+        //cout<<"Invalid Input!";
+        MainMenu();
+        break;
+    }
+}
 // ---------------------------------------Main Code--------------------------------------
 int main()
 {
-    cout<<"
-██████╗░███████╗░██████╗░█████╗░██████╗░████████╗
-██╔══██╗██╔════╝██╔════╝██╔══██╗██╔══██╗╚══██╔══╝
-██████╔╝█████╗░░╚█████╗░██║░░██║██████╔╝░░░██║░░░
-██╔══██╗██╔══╝░░░╚═══██╗██║░░██║██╔══██╗░░░██║░░░
-██║░░██║███████╗██████╔╝╚█████╔╝██║░░██║░░░██║░░░
-╚═╝░░╚═╝╚══════╝╚═════╝░░╚════╝░╚═╝░░╚═╝░░░╚═╝░░░"<<endl;
+    MainMenu();
+    //TicTacToe();
+    //HangMan();
 
     return 0;
 }
