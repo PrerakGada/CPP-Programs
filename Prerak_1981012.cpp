@@ -1,5 +1,6 @@
 #include<iostream>
 #include<stdlib.h>
+#include<fstream>
 using namespace std;
 
 string Bill[100] = {};
@@ -11,6 +12,9 @@ void Games(void);
 void MainMenu(void);
 void Restaurant(void);
 void CheckOut(void);
+void LoginSignup(void);
+void Login(void);
+void Signup(void);
 
 
 //-----------------------------------TicTacToe------------------------------------------
@@ -356,6 +360,35 @@ void CheckOut()
 
 }
 
+void LoginSignup()
+{
+    system("clear");
+    int choice;
+    cout<<"-------------------------------"<<endl;
+    cout<<"|       Login or Sign Up      |"<<endl;
+    cout<<"-------------------------------"<<endl;
+    cout<<"| 1.Login                     |"<<endl;
+    cout<<"| 2.Sign Up                   |"<<endl;
+    cout<<"-------------------------------"<<endl;
+    cout<<"Enter your choice: ";
+    cin>>choice;
+
+    switch (choice)
+    {
+    case 1:
+        Login();
+        break;
+
+    case 2:
+        Signup();
+        break;
+
+    default:
+        LoginSignup();
+        break;
+    }
+}
+
 void MainMenu()
 {
     system("clear");
@@ -397,7 +430,6 @@ void MainMenu()
         break;
     
     default:
-        //cout<<"Invalid Input!";
         MainMenu();
         break;
     }
@@ -406,8 +438,5 @@ void MainMenu()
 int main()
 {
     MainMenu();
-    //TicTacToe();
-    //HangMan();
-
     return 0;
 }
