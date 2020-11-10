@@ -389,6 +389,16 @@ void LoginSignup()
     }
 }
 
+void Login()
+{
+    system("clear");
+}
+
+void Signup()
+{
+    system("clear");
+}
+
 void MainMenu()
 {
     system("clear");
