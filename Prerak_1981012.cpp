@@ -403,6 +403,7 @@ void Signup()
 
     ofstream out ("users/"+uname+"_data.txt");
     ofstream ot ("users/"+uname+"_bill.txt");
+    
 }
 
 void MainMenu()
