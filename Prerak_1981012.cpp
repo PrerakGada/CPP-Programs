@@ -397,6 +397,12 @@ void Login()
 void Signup()
 {
     system("clear");
+    string uname;
+    cout<<"Enter your Name: ";
+    cin>>uname;
+
+    ofstream out ("users/"+uname+"_data.txt");
+    ofstream ot ("users/"+uname+"_bill.txt");
 }
 
 void MainMenu()
@@ -447,6 +453,7 @@ void MainMenu()
 // ---------------------------------------Main Code--------------------------------------
 int main()
 {
-    MainMenu();
+    //MainMenu();
+    LoginSignup();
     return 0;
 }
