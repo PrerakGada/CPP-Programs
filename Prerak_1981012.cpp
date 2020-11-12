@@ -1,10 +1,14 @@
 #include<iostream>
 #include<stdlib.h>
 #include<fstream>
+#include<string>
 using namespace std;
 
 string Bill[100] = {};
 double aBill = 0;
+
+ofstream out;
+ifstream in;
 
 void TicTacToe(void);
 void HangMan(void);
@@ -12,6 +16,7 @@ void Games(void);
 void MainMenu(void);
 void Restaurant(void);
 void CheckOut(void);
+void SignOut(void);
 void LoginSignup(void);
 void Login(void);
 void Signup(void);
@@ -360,6 +365,12 @@ void CheckOut()
 
 }
 
+void SignOut()
+{
+    system("clear");
+
+}
+
 void LoginSignup()
 {
     system("clear");
@@ -392,18 +403,41 @@ void LoginSignup()
 void Login()
 {
     system("clear");
+    string s;
+    while(in.eof()==0)
+        {
+            getline(in, s);
+            cout<<s<<endl;
+        }
 }
 
 void Signup()
 {
+    system("mkdir users");
     system("clear");
-    string uname;
-    cout<<"Enter your Name: ";
+    string uname, pass;
+    char ch;
+    cout<<"Enter your Username: ";
     cin>>uname;
 
-    ofstream out ("users/"+uname+"_data.txt");
-    ofstream ot ("users/"+uname+"_bill.txt");
-    
+    in.open("users/"+uname+"_data.txt");
+
+    if(in.fail())
+    {
+        in.close();
+        out.open("users/"+uname+".txt");
+        cout<<"Enter your Password: ";
+        cin>>pass;
+        out<<pass<<endl;
+        out.close();
+        MainMenu();
+    }
+    else
+    {
+        cout<<"User already exists!"<<endl;
+        in.close();
+        Signup();
+    }
 }
 
 void MainMenu()
@@ -437,11 +471,11 @@ void MainMenu()
         cout<<"-------------------------------"<<endl;
         cout<<"|            Alert!           |"<<endl;
         cout<<"-------------------------------"<<endl;
-        cout<<"Are you sure you want to Check Out?"<<endl;
+        cout<<"Are you sure you want to Sign Out?"<<endl;
         cout<<"Enter 1 for yes: ";
         cin>>c;
         if(c==1)
-            CheckOut();
+            SignOut();
         else 
             MainMenu();
         break;
@@ -455,6 +489,7 @@ void MainMenu()
 int main()
 {
     //MainMenu();
-    LoginSignup();
+    //LoginSignup();
+    Signup();
     return 0;
 }
