@@ -2,10 +2,12 @@
 #include<stdlib.h>
 #include<fstream>
 #include<string>
+#include<unistd.h>
 using namespace std;
 
 string Bill[100] = {};
 double aBill = 0;
+string uname;
 
 ofstream out;
 ifstream in;
@@ -20,7 +22,32 @@ void SignOut(void);
 void LoginSignup(void);
 void Login(void);
 void Signup(void);
+void Bye(void);
+void AddBill(string product, int price);
 
+
+
+
+void AddBill(string product, int price)
+{
+    in.open("users/"+uname+".txt");
+    int i=0;
+    while(in.eof()==0)
+    {
+        getline(in, Bill[i]);
+        i++;
+    }
+
+    for(i=1;true;i++)
+    {
+        if(Bill[i]=="end")
+            break;
+
+        cout<<Bill[i]<<endl;
+
+    }
+    in.close();
+}
 
 //-----------------------------------TicTacToe------------------------------------------
 void tttdisplayboard(char board[9])
@@ -319,7 +346,6 @@ void Restaurant()
         default:
             Restaurant();
             break;
-
     }
 }
 
@@ -330,8 +356,8 @@ void Games()
     cout<<"-------------------------------"<<endl;
     cout<<"|            Games            |"<<endl;
     cout<<"-------------------------------"<<endl;
-    cout<<"| 1.TicTacToe                 |"<<endl;
-    cout<<"| 2.HangMan                   |"<<endl;
+    cout<<"| 1.TicTacToe.............$10 |"<<endl;
+    cout<<"| 2.HangMan................$5 |"<<endl;
     cout<<"|                             |"<<endl;
     cout<<"| 0.Main Menu                 |"<<endl;
     cout<<"-------------------------------"<<endl;
@@ -365,7 +391,7 @@ void CheckOut()
 
 }
 
-void SignOut()
+void Bye()
 {
     system("clear");
 
@@ -380,6 +406,8 @@ void LoginSignup()
     cout<<"-------------------------------"<<endl;
     cout<<"| 1.Login                     |"<<endl;
     cout<<"| 2.Sign Up                   |"<<endl;
+    cout<<"|                             |"<<endl;
+    cout<<"| 0.Exit                      |"<<endl;
     cout<<"-------------------------------"<<endl;
     cout<<"Enter your choice: ";
     cin>>choice;
@@ -394,6 +422,10 @@ void LoginSignup()
         Signup();
         break;
 
+    case 0:
+        Bye();
+        break;
+
     default:
         LoginSignup();
         break;
@@ -402,26 +434,52 @@ void LoginSignup()
 
 void Login()
 {
+    system("mkdir users");
     system("clear");
-    string s;
-    while(in.eof()==0)
+    string pass;
+    char ch;
+    cout<<"Enter Username: ";
+    cin>>uname;
+    cout<<"Enter Password: ";
+    cin>>pass;
+
+    in.open("users/"+uname+".txt");
+
+    if(in.fail())
+    {
+        in.close();
+        cout<<"No such User found!!"<<endl;
+        LoginSignup();
+    }
+    else
+    {
+        string p;
+        in>>p;
+        if(p==pass)
+            MainMenu();
+        else
         {
-            getline(in, s);
-            cout<<s<<endl;
+            in.close();
+            for(int i=3;i>0;i--)
+            {
+                system("clear");
+                cout<<"Invalid Password!"<<endl;
+                cout<<"\nTry again in "<<i<<" seconds...."<<endl;
+                sleep(1);
+            }
+            LoginSignup();
         }
+    }
 }
 
 void Signup()
 {
     system("mkdir users");
     system("clear");
-    string uname, pass;
-    char ch;
+    string pass;
     cout<<"Enter your Username: ";
     cin>>uname;
-
-    in.open("users/"+uname+"_data.txt");
-
+    in.open("users/"+uname+".txt");
     if(in.fail())
     {
         in.close();
@@ -429,14 +487,21 @@ void Signup()
         cout<<"Enter your Password: ";
         cin>>pass;
         out<<pass<<endl;
+        out<<"end";
         out.close();
         MainMenu();
     }
     else
     {
-        cout<<"User already exists!"<<endl;
         in.close();
-        Signup();
+        for(int i=3;i>0;i--)
+        {
+            system("clear");
+            cout<<"User already exists!!"<<endl;
+            cout<<"\nTry again in "<<i<<" seconds...."<<endl;
+            sleep(1);
+        }
+        LoginSignup();
     }
 }
 
@@ -449,8 +514,9 @@ void MainMenu()
     cout<<"-------------------------------"<<endl;
     cout<<"| 1.Play Games                |"<<endl;
     cout<<"| 2.Restaurant                |"<<endl;
+    cout<<"| 3.Check Out                 |"<<endl;
     cout<<"|                             |"<<endl;
-    cout<<"| 0.Check Out                 |"<<endl;
+    cout<<"| 0.Sign Out                  |"<<endl;
     cout<<"-------------------------------"<<endl;
     cout<<"Enter your choice: ";
     cin>>choice;
@@ -465,6 +531,10 @@ void MainMenu()
         Restaurant();
         break;
 
+    case 3:
+        CheckOut();
+        break;
+
     case 0:
         int c;
         system("clear");
@@ -475,7 +545,7 @@ void MainMenu()
         cout<<"Enter 1 for yes: ";
         cin>>c;
         if(c==1)
-            SignOut();
+            LoginSignup();
         else 
             MainMenu();
         break;
@@ -488,8 +558,8 @@ void MainMenu()
 // ---------------------------------------Main Code--------------------------------------
 int main()
 {
-    //MainMenu();
     //LoginSignup();
-    Signup();
+    uname="a";
+    AddBill("", 5);
     return 0;
 }

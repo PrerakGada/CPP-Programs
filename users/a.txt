@@ -1,0 +1,4 @@
+a
+TicTacToe 5 $10
+HangMan 3 $5
+end
