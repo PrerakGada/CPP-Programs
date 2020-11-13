@@ -6,7 +6,8 @@
 using namespace std;
 
 string Bill[100] = {};
-double aBill = 0;
+double Price[100] = {};
+double Quantity[100] = {};
 string uname;
 
 ofstream out;
@@ -23,30 +24,100 @@ void LoginSignup(void);
 void Login(void);
 void Signup(void);
 void Bye(void);
-void AddBill(string product, int price);
+void AddBill(string product, int quantity, int price);
+void DisplayBill(void);
 
 
 
 
-void AddBill(string product, int price)
+void AddBill(string product, int quantity, int price)
 {
     in.open("users/"+uname+".txt");
-    int i=0;
-    while(in.eof()==0)
+    in>>Bill[0];
+    int flag = 0;
+    for(int i=1;in.eof()==0;i++)
     {
-        getline(in, Bill[i]);
-        i++;
+
+        //getline(in, Bill[i]);
+        in>>Quantity[i];
+        in>>Price[i];
+        in>>Bill[i];
+    }
+    int l = 23 - product.size();
+    for(int i=0;i<l;i++)
+        product += ".";
+    for(int i=1;true;i++)
+    {
+        
+        if(Bill[i]=="end")
+            break;
+
+        if(Bill[i]==product)
+        {
+            Quantity[i]+=quantity;
+            Price[i] += price;
+            flag = 1;
+        }
+    }
+    if(flag==0)
+    {
+        for(int i=1;true;i++)
+        {
+            if(Bill[i]=="end")
+            {
+                Bill[i] = product;
+                Quantity[i]++;
+                Price[i] = price;
+
+                Bill[i+1] = "end";
+                Quantity[i+1] = 0;
+                Price[i+1] = 0;
+                break;
+            }
+        }
+    }
+    in.close();
+    out.open("users/"+uname+".txt");
+    out<<Bill[0]<<endl;
+    for(int i=1;true;i++)
+    {
+        out<<Quantity[i]<<" "<<Price[i]<<" "<<Bill[i]<<endl;
+        if(Bill[i]=="end")
+            break;
+    }
+    out.close();
+}
+
+void DisplayBill()
+{
+    system("clear");
+    in.open("users/"+uname+".txt");
+    in>>Bill[0];
+    for(int i=1;in.eof()==0;i++)
+    {
+        in>>Quantity[i];
+        in>>Price[i];
+        in>>Bill[i];
     }
 
-    for(i=1;true;i++)
+    cout<<"Sr.\tTitle\t\t\tQuantity\tPrice"<<endl;
+    cout<<"-----------------------------------------------------"<<endl;
+
+    for(int i=1;true;i++)
     {
         if(Bill[i]=="end")
             break;
 
-        cout<<Bill[i]<<endl;
-
+        cout<<i<<".\t"<<Bill[i]<<"\t   "<<Quantity[i]<<"\t\t$"<<Price[i]<<endl;
     }
     in.close();
+
+    cout<<"1.Check Out"<<endl;
+    cout<<"0.Main Menu"<<endl;
+    int c;
+    cin>>c;
+    if(c==0)
+        MainMenu();
 }
 
 //-----------------------------------TicTacToe------------------------------------------
@@ -231,6 +302,7 @@ void hmdisplay(string word, string hangman, string wrong, int c)
 
 void HangMan()
 {
+    AddBill("HangMan", 1, 5);
     string words[10] = {"encapsulation", "awesome", "floroscent", "enormity", "technique", "polynomial", "difficult", "luggage", "eliminate", "rythm"};
     //string word = words[rand()%10];
     string word = "hey";
@@ -325,7 +397,9 @@ void Restaurant()
 
     int c;
 
-    cout<<"1.Meal\n2.Fast Food\n3.Deserts and Drinks"<<endl;
+    cout<<"1.Meal"<<endl;
+    cout<<"2.Fast Food"<<endl;
+    cout<<"3.Deserts and Drinks"<<endl;
 
     cout<<"Enter your choice: ";
     cin>>c;
@@ -487,7 +561,7 @@ void Signup()
         cout<<"Enter your Password: ";
         cin>>pass;
         out<<pass<<endl;
-        out<<"end";
+        out<<"0 0 end";
         out.close();
         MainMenu();
     }
@@ -514,7 +588,7 @@ void MainMenu()
     cout<<"-------------------------------"<<endl;
     cout<<"| 1.Play Games                |"<<endl;
     cout<<"| 2.Restaurant                |"<<endl;
-    cout<<"| 3.Check Out                 |"<<endl;
+    cout<<"| 3.Check Bill                |"<<endl;
     cout<<"|                             |"<<endl;
     cout<<"| 0.Sign Out                  |"<<endl;
     cout<<"-------------------------------"<<endl;
@@ -532,7 +606,7 @@ void MainMenu()
         break;
 
     case 3:
-        CheckOut();
+        DisplayBill();
         break;
 
     case 0:
@@ -558,8 +632,9 @@ void MainMenu()
 // ---------------------------------------Main Code--------------------------------------
 int main()
 {
-    //LoginSignup();
-    uname="a";
-    AddBill("", 5);
+    LoginSignup();
+    //uname="a";
+    //AddBill("Pizza", 1, 5);
+    //DisplayBill();
     return 0;
 }
