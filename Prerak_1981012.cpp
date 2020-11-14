@@ -632,9 +632,9 @@ void MainMenu()
 // ---------------------------------------Main Code--------------------------------------
 int main()
 {
-    LoginSignup();
-    //uname="a";
-    //AddBill("Pizza", 1, 5);
-    //DisplayBill();
+    //LoginSignup();
+    uname="a";
+    AddBill("Pizza", 1, 5);
+    DisplayBill();
     return 0;
 }
