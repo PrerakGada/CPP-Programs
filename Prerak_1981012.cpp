@@ -24,21 +24,19 @@ void LoginSignup(void);
 void Login(void);
 void Signup(void);
 void Bye(void);
-void AddBill(string product, int quantity, int price);
+void AddBill(string product, int price);
 void DisplayBill(void);
 
 
 
 
-void AddBill(string product, int quantity, int price)
+void AddBill(string product, int price)
 {
     in.open("users/"+uname+".txt");
     in>>Bill[0];
     int flag = 0;
     for(int i=1;in.eof()==0;i++)
     {
-
-        //getline(in, Bill[i]);
         in>>Quantity[i];
         in>>Price[i];
         in>>Bill[i];
@@ -54,7 +52,7 @@ void AddBill(string product, int quantity, int price)
 
         if(Bill[i]==product)
         {
-            Quantity[i]+=quantity;
+            Quantity[i]++;
             Price[i] += price;
             flag = 1;
         }
@@ -302,7 +300,6 @@ void hmdisplay(string word, string hangman, string wrong, int c)
 
 void HangMan()
 {
-    AddBill("HangMan", 1, 5);
     string words[10] = {"encapsulation", "awesome", "floroscent", "enormity", "technique", "polynomial", "difficult", "luggage", "eliminate", "rythm"};
     //string word = words[rand()%10];
     string word = "hey";
@@ -363,7 +360,8 @@ void HangMan()
     }
     else
         cout<<"\n\nYour chances are over, Better luck next time.\n\nThe word was: "<<word<<endl;
-    
+
+    AddBill("HangMan", 5);
     int a;
     cout<<"\n\n\nDo you want to play again?"<<endl;
     cout<<"Enter 1 for yes: ";
@@ -588,7 +586,7 @@ void MainMenu()
     cout<<"-------------------------------"<<endl;
     cout<<"| 1.Play Games                |"<<endl;
     cout<<"| 2.Restaurant                |"<<endl;
-    cout<<"| 3.Check Bill                |"<<endl;
+    cout<<"| 3.Display Bill              |"<<endl;
     cout<<"|                             |"<<endl;
     cout<<"| 0.Sign Out                  |"<<endl;
     cout<<"-------------------------------"<<endl;
@@ -612,9 +610,6 @@ void MainMenu()
     case 0:
         int c;
         system("clear");
-        cout<<"-------------------------------"<<endl;
-        cout<<"|            Alert!           |"<<endl;
-        cout<<"-------------------------------"<<endl;
         cout<<"Are you sure you want to Sign Out?"<<endl;
         cout<<"Enter 1 for yes: ";
         cin>>c;
@@ -632,9 +627,9 @@ void MainMenu()
 // ---------------------------------------Main Code--------------------------------------
 int main()
 {
-    //LoginSignup();
-    uname="a";
-    AddBill("Pizza", 1, 5);
-    DisplayBill();
+    LoginSignup();
+    //uname="a";
+    //AddBill("Pizza", 5);
+    //DisplayBill();
     return 0;
 }
